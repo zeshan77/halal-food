@@ -23,6 +23,7 @@
             <th>Title</th>
             <th>Body</th>
             <th>Created on</th>
+            <th>Actions</th>
         </tr>
     </thead>
     <tbody>
@@ -32,6 +33,10 @@
                 <td>{{ $post['title'] }}</td>
                 <td>{{ $post['body'] }}</td>
                 <td>{{ $post['created_at'] }}</td>
+                <td>
+                    <a href="/posts/{{ $post['id'] }}/edit">edit</a> -
+                    <a href="/posts/{{ $post['id'] }}/delete">delete</a>
+                </td>
             </tr>
         @endforeach
     </tbody>

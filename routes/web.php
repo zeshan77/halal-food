@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+use \App\Http\Controllers\PostController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -20,21 +20,23 @@ Route::get('/', [\App\Http\Controllers\HomeController::class, 'index'])
 Route::get('/users', [\App\Http\Controllers\UserController::class, 'index']);
 
 
-Route::get('/posts', [\App\Http\Controllers\PostController::class, 'index'])
-    ->name('posts.index');
-
-Route::get('/posts/create', function () {
-    return view('posts');
-})->name('posts.create');
 
 
-Route::post('/posts', [\App\Http\Controllers\PostController::class, 'store']);
 
 
-//GET
-// POST
-// DELETE
-// PUT
-// PATCH
+Route::group([
+    'prefix' => 'posts',
+    'controller' => PostController::class,
+    'as' => 'posts.'
+], function () {
+    Route::get('/', 'index')->name('index');
 
-// procurement/abc
+    Route::get('/create', 'create')->name('create');
+    Route::post('/', 'store')->name('store');
+
+    Route::get('/{post}/edit', 'edit')->name('edit');
+    Route::put('/{post}', 'update')->name('update');
+
+    Route::get('/{post}/delete', 'delete')->name('delete');
+    Route::delete('/{post}', 'destroy')->name('destroy');
+});
