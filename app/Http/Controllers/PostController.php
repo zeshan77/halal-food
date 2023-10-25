@@ -22,7 +22,7 @@ class PostController extends Controller
 
     public function create(): View
     {
-        return view('posts');
+        return view('posts.create');
     }
 
     public function store(PostCreateRequest $request): RedirectResponse
