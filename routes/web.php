@@ -1,5 +1,9 @@
 <?php
 
+use App\Http\Controllers\LoginController;
+use App\Http\Controllers\RegisterController;
+use App\Models\Post;
+use App\Models\User;
 use Illuminate\Support\Facades\Route;
 use \App\Http\Controllers\PostController;
 /*
@@ -20,14 +24,26 @@ Route::get('/', [\App\Http\Controllers\HomeController::class, 'index'])
 Route::get('/users', [\App\Http\Controllers\UserController::class, 'index']);
 
 
+Route::get('/register', [RegisterController::class, 'create']);
+Route::post('/register', [RegisterController::class, 'store']);
 
+Route::view('/dashboard', 'dashboard')
+    ->middleware('auth');
 
+Route::get('/logout', [LoginController::class, 'destroy']);
+
+Route::get('/login', [LoginController::class, 'show'])
+    ->name('login')
+    ->middleware('throttle:5,1');
+
+Route::post('/login', [LoginController::class, 'store'])->name('login.store');
 
 
 Route::group([
     'prefix' => 'posts',
     'controller' => PostController::class,
-    'as' => 'posts.'
+    'as' => 'posts.',
+    'middleware' => ['auth'],
 ], function () {
     Route::get('/', 'index')->name('index');
 
