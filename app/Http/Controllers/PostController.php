@@ -15,7 +15,7 @@ class PostController extends Controller
 {
     public function index(): View
     {
-        $posts = Post::paginate(10);
+        $posts = Post::published()->paginate(10);
 
         return view('posts.index', [
             'posts' => $posts,
@@ -50,7 +50,7 @@ class PostController extends Controller
         ]);
     }
 
-    public function update($post, PostUpdateRequest $request): RedirectResponse
+    public function update(Post $post, PostUpdateRequest $request): RedirectResponse
     {
         Post::where('id', $post)
             ->update([
@@ -63,10 +63,8 @@ class PostController extends Controller
             ->with('message', "Post {$post} was successfully updated.");
     }
 
-    public function delete($post)
+    public function delete(Post $post)
     {
-        $post = Post::where('id', $post)->first();
-
         return view('posts.delete', [
             'post' => $post,
         ]);

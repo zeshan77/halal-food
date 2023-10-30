@@ -33,8 +33,13 @@
                 <td>{{ $post['body'] }}</td>
                 <td>{{ $post['created_at'] }}</td>
                 <td>
-                    <a href="/posts/{{ $post['id'] }}/edit">edit</a> -
-                    <a href="/posts/{{ $post['id'] }}/delete">delete</a>
+                    @can('update', $post)
+                        <a href="/posts/{{ $post['id'] }}/edit">edit</a> -
+                    @endcan
+
+                    @can('delete', $post)
+                        <a href="/posts/{{ $post['id'] }}/delete">delete</a>
+                    @endcan
                 </td>
             </tr>
         @endforeach
