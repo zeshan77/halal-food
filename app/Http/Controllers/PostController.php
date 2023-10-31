@@ -8,6 +8,8 @@ use App\Models\Post;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Illuminate\View\View;
 
@@ -15,7 +17,16 @@ class PostController extends Controller
 {
     public function index(): View
     {
-        $posts = Post::published()->paginate(10);
+        DB::listen(static function ($q) {
+            logger('listen to queries', [
+                'query' => $q->sql,
+                'bindings' => $q->bindings,
+            ]);
+        });
+
+        $posts = Cache::rememberForever('posts', function () {
+            return Post::paginate(10);
+        });
 
         return view('posts.index', [
             'posts' => $posts,
@@ -70,10 +81,9 @@ class PostController extends Controller
         ]);
     }
 
-    public function destroy($post): RedirectResponse
+    public function destroy(Post $post): RedirectResponse
     {
-        Post::where('id', $post)
-            ->delete();
+        $post->delete();
 
         return redirect()
             ->route('posts.index')
