@@ -24,9 +24,7 @@ class PostController extends Controller
             ]);
         });
 
-        $posts = Cache::rememberForever('posts', function () {
-            return Post::paginate(10);
-        });
+        $posts = Post::latest('id')->paginate(10);
 
         return view('posts.index', [
             'posts' => $posts,
@@ -52,6 +50,11 @@ class PostController extends Controller
         return redirect()
             ->route('posts.index')
             ->with('message', 'Post has successfully created.');
+    }
+
+    public function show(Post $post): View
+    {
+        return view('posts.show', ['post' => $post]);
     }
 
     public function edit(Post $post)

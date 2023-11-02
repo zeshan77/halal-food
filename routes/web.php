@@ -50,18 +50,16 @@ Route::group([
     Route::get('/create', 'create')->name('create');
     Route::post('/', 'store')->name('store');
 
+    Route::get('/{post}/show', 'show')->name('show');
+
     Route::get('/{post}/edit', 'edit')
-        ->name('edit')
-        ->can('update', 'post');
-//        ->middleware(['can:update,post']);
+        ->name('edit');
 
     Route::put('/{post}', 'update')->name('update');
 
     Route::get('/{post}/delete', 'delete')
-        ->name('delete')
-        ->can('delete', 'post');
+        ->name('delete');
 
     Route::delete('/{post}', 'destroy')
-        ->name('destroy')
-        ->can('delete', 'post');
+        ->name('destroy');
 });

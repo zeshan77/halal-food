@@ -10,9 +10,7 @@
         <div class="alert alert-success">{{ session('message') }}</div>
     @endif
 
-    @can('create-post')
-        <a class="btn btn-primary float-end mb-3" href="/posts/create">Create new post</a>
-    @endcan
+    <a class="btn btn-primary float-end mb-3" href="/posts/create">Create new post</a>
 <table class="table">
     <thead>
         <tr>
@@ -27,17 +25,12 @@
         @foreach($posts as $post)
             <tr>
                 <td>{{ $post['id'] }}</td>
-                <td>{{ $post['title'] }}</td>
-                <td>{{ $post['body'] }}</td>
+                <td><a href="{{ route('posts.show', $post['id']) }}">{{ $post['title'] }}</a></td>
+                <td>{{ str($post['body'])->words(3) }}</td>
                 <td>{{ $post['created_at'] }}</td>
                 <td>
-                    @can('update', $post)
-                        <a href="/posts/{{ $post['id'] }}/edit">edit</a> -
-                    @endcan
-
-                    @can('delete', $post)
-                        <a href="/posts/{{ $post['id'] }}/delete">delete</a>
-                    @endcan
+                    <a href="/posts/{{ $post['id'] }}/edit">edit</a> -
+                    <a href="/posts/{{ $post['id'] }}/delete">delete</a>
                 </td>
             </tr>
         @endforeach
