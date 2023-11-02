@@ -30,7 +30,7 @@ Route::post('/register', [RegisterController::class, 'store']);
 Route::view('/dashboard', 'dashboard')
     ->middleware('auth');
 
-Route::get('/logout', [LoginController::class, 'destroy']);
+Route::get('/logout', [LoginController::class, 'destroy'])->name('logout');
 
 Route::get('/login', [LoginController::class, 'show'])
     ->name('login')

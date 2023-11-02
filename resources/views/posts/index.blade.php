@@ -1,9 +1,5 @@
 <x-layout>
 
-    @push('styles')
-        <link rel="stylesheet" href="/abc.css">
-    @endpush
-
     <x-slot name="title">
         Show all posts
     </x-slot>
@@ -14,7 +10,9 @@
         <div class="alert alert-success">{{ session('message') }}</div>
     @endif
 
-<a class="btn btn-primary float-end mb-3" href="/posts/create">Create new post</a>
+    @can('create-post')
+        <a class="btn btn-primary float-end mb-3" href="/posts/create">Create new post</a>
+    @endcan
 <table class="table">
     <thead>
         <tr>

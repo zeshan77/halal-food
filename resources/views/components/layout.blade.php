@@ -10,7 +10,10 @@
 
     @stack('styles')
 </head>
-<body class="bg-light">
+<body class="bg-light" >
+    <div class="container mt-3" style="width: 900px; " >
+    <x-partials.nav />
     {{ $slot }}
+    </div>
 </body>
 </html>
