@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 // use Illuminate\Support\Facades\Gate;
+use App\Models\Permission;
 use App\Models\Post;
 use App\Models\User;
 use App\Policies\PostPolicy;
@@ -25,21 +26,12 @@ class AuthServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-//        Gate::before(function(User $user) {
-//            if($user->id === 1) {
-//                return true;
-//            }
-//
-//            return null;
-//        });
-//
-//        Gate::define('update-post', function (User $user, Post $post) {
-//
-//            if($user->id === $post->user_id) {
-//                return true;
-//            }
-//
-//            return false;
-//        });
+        $permissions = Permission::get();
+
+        foreach($permissions as $permission) {
+            Gate::define($permission->slug, function (User $user) use ($permission) {
+                return $user->hasRole($permission->roles);
+            });
+        }
     }
 }

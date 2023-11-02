@@ -66,7 +66,7 @@ class PostController extends Controller
 
     public function update(Post $post, PostUpdateRequest $request): RedirectResponse
     {
-        Post::where('id', $post)
+        Post::where('id', $post->id)
             ->update([
                 'title' => $request->title,
                 'body' => $request->body,
@@ -74,7 +74,7 @@ class PostController extends Controller
 
         return redirect()
             ->route('posts.index')
-            ->with('message', "Post {$post} was successfully updated.");
+            ->with('message', "Post {$post->id} was successfully updated.");
     }
 
     public function delete(Post $post)
@@ -90,6 +90,6 @@ class PostController extends Controller
 
         return redirect()
             ->route('posts.index')
-            ->with('message', "Post {$post} was successfully deleted.");
+            ->with('message', "Post {$post->id} was successfully deleted.");
     }
 }

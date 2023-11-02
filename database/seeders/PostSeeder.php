@@ -6,6 +6,7 @@ use App\Models\Post;
 use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
 
 class PostSeeder extends Seeder
 {
@@ -15,12 +16,14 @@ class PostSeeder extends Seeder
     public function run(): void
     {
         $user = User::factory([
-            'name' => 'Sohaib',
+            'name' => 'Zeshan',
+            'password' => Hash::make('password'),
+            'email' => 'zeshan77@gmail.com',
         ])->create();
 
         Post::factory()
             ->for($user)
-            ->count(1000)
+            ->count(10)
             ->create();
     }
 }

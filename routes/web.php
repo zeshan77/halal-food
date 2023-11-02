@@ -47,19 +47,29 @@ Route::group([
 ], function () {
     Route::get('/', 'index')->name('index');
 
-    Route::get('/create', 'create')->name('create');
-    Route::post('/', 'store')->name('store');
+    Route::get('/create', 'create')
+        ->name('create')
+        ->can('create-post');
+
+    Route::post('/', 'store')
+        ->name('store')
+        ->can('create-post');
 
     Route::get('/{post}/show', 'show')->name('show');
 
     Route::get('/{post}/edit', 'edit')
-        ->name('edit');
+        ->name('edit')
+        ->can('update-post');
 
-    Route::put('/{post}', 'update')->name('update');
+    Route::put('/{post}', 'update')
+        ->name('update')
+        ->can('update-post');
 
     Route::get('/{post}/delete', 'delete')
-        ->name('delete');
+        ->name('delete')
+        ->can('delete-post');
 
     Route::delete('/{post}', 'destroy')
-        ->name('destroy');
+        ->name('destroy')
+        ->can('delete-post');
 });
