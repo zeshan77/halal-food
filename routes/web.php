@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RegisterController;
+use App\Http\Controllers\RoleController;
+use App\Http\Controllers\UserController;
 use App\Models\Post;
 use App\Models\User;
 use Illuminate\Support\Facades\Route;
@@ -21,7 +23,6 @@ Route::get('/', [\App\Http\Controllers\HomeController::class, 'index'])
     ->name('home');
 
 
-Route::get('/users', [\App\Http\Controllers\UserController::class, 'index']);
 
 
 Route::get('/register', [RegisterController::class, 'create']);
@@ -38,6 +39,32 @@ Route::get('/login', [LoginController::class, 'show'])
 
 Route::post('/login', [LoginController::class, 'store'])->name('login.store');
 
+Route::group([
+    'prefix' => 'users',
+    'controller' => UserController::class,
+    'as' => 'users.',
+    'middleware' => ['auth'],
+], static function () {
+    Route::get('/', 'index');
+
+});
+
+Route::group([
+    'prefix' => 'roles',
+    'controller' => RoleController::class,
+    'as' => 'roles.',
+    'middleware' => ['auth'],
+], static function () {
+    Route::get('/', 'index')
+        ->name('index')
+        ->can('view-roles');
+    Route::get('/create', 'create')
+        ->name('create')
+        ->can('create-role');
+    Route::post('/', 'store')
+        ->name('store')
+        ->can('create-role');
+});
 
 Route::group([
     'prefix' => 'posts',

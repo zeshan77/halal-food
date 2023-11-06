@@ -37,6 +37,7 @@ class RolesAndPermissionsSeeder extends Seeder
         // assign roles to users
         $users['editor']->roles()->save($editorRole);
         $users['author']->roles()->save($authorRole);
+        $users['super-admin']->roles()->save($superAdminRole);
 
     }
 

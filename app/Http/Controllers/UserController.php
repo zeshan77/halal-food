@@ -2,18 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\View\View;
 
 class UserController extends Controller
 {
-    public function index()
+    public function index(): View
     {
-        $users = [
-            ['name' => 'Ali', 'email' => 'ali@mail.com'],
-            ['name' => 'Asad', 'email' => 'asad@mail.com'],
-        ];
+        $users = User::with('roles')->paginate(10);
 
-        return view('users', [
+        return view('users.index', [
             'users' => $users
         ]);
     }
