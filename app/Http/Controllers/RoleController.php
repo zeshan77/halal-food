@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\RoleCreated;
 use App\Models\Permission;
 use App\Models\Role;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Illuminate\View\View;
+use Exception;
 
 class RoleController extends Controller
 {
@@ -34,14 +37,27 @@ class RoleController extends Controller
             'permissions.*' => ['integer', 'exists:permissions,id'],
         ]);
 
-        // create role in database
-        $role = Role::create([
-            'name' => $request->name,
-            'slug' => Str::slug($request->name),
-        ]);
+        try {
+            DB::beginTransaction();
+            $role = Role::create([
+                'name' => $request->name,
+                'slug' => Str::slug($request->name),
+            ]);
 
-        // attach permissions
-        $role->permissions()->attach($request->permissions);
+
+
+            // attach permissions
+            $role->permissions()->attach($request->permissions);
+            DB::commit();
+
+            RoleCreated::dispatch($role);
+
+        } catch (Exception $exception) {
+            DB::rollBack();
+
+            dd($exception->getMessage());
+        }
+
 
         // redirect
         return redirect()
