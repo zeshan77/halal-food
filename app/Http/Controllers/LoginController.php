@@ -18,6 +18,7 @@ class LoginController extends Controller
             'email' => ['required', 'email'],
             'password' => ['required', 'min:8'],
         ]);
+
         // authenticate
 
         if(Auth::attempt(['email' => $request->email, 'password' => $request->password])) {

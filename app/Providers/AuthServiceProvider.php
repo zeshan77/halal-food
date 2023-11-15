@@ -34,6 +34,10 @@ class AuthServiceProvider extends ServiceProvider
             return null;
         });
 
+        if(app()->runningInConsole()) {
+            return;
+        }
+
         $permissions = Permission::get();
 
         foreach($permissions as $permission) {
