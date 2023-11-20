@@ -34,9 +34,6 @@ class Post extends Model
 
     protected static function booted()
     {
-//        self::addGlobalScope(new CurrentPostScope());
-
-
         self::created(function (Post $post) {
             Cache::flush('posts');
         });
