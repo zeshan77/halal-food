@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\PostCommentController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
@@ -98,3 +99,7 @@ Route::group([
         ->name('destroy')
         ->can('delete-post');
 });
+
+Route::post('/posts/{post}/comments', [PostCommentController::class, 'store'])
+    ->name('posts.comments.store')
+    ->middleware('auth');
