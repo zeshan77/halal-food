@@ -1,10 +1,12 @@
 <?php
 
+use App\Http\Controllers\APIsController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\PostCommentController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
+use App\Models\Post;
 use Illuminate\Support\Facades\Route;
 use \App\Http\Controllers\PostController;
 /*
@@ -21,8 +23,53 @@ use \App\Http\Controllers\PostController;
 Route::get('/', [\App\Http\Controllers\HomeController::class, 'index'])
     ->name('home');
 
+Route::get('/collections', static function () {
+
+    $collection = collect([
+        [
+            'name' => 'Aamir',
+            'age' => 35,
+        ],
+        [
+            'name' => 'Fareed',
+            'age' => 21,
+        ],
+        [
+            'name' => 'Mushtaq',
+            'age' => 25,
+        ],
+        [
+            'name' => 'Fazal',
+            'age' => 45,
+        ],
+    ]);
+
+    $names = [
+        'Ali',
+        'Asad',
+        'Ahsan',
+    ];
 
 
+
+    return $collection->filter(function ($item) {
+        return $item['age'] <= 25;
+    })->add([
+        'name' => 'Saeed',
+        'age' => 17,
+    ]);
+
+
+
+
+//    return collect($names)->filter(function ($item) {
+//        return false;
+//    })->map(function ($item) {
+//        return $item * 2;
+//    });
+});
+
+Route::get('/apis', APIsController::class);
 
 Route::get('/register', [RegisterController::class, 'create']);
 Route::post('/register', [RegisterController::class, 'store']);
