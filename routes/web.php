@@ -7,6 +7,9 @@ use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
 use App\Models\Post;
+use App\Models\User;
+use App\Notifications\SalaryDispatched;
+use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Route;
 use \App\Http\Controllers\PostController;
 /*
@@ -19,6 +22,17 @@ use \App\Http\Controllers\PostController;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+
+Route::get('/notifications', static function () {
+    $user = User::first();
+
+    $user->notify(new SalaryDispatched());
+
+//    Notification::send($users, new SalaryDispatched());
+
+    return 'Done';
+
+});
 
 Route::get('/', [\App\Http\Controllers\HomeController::class, 'index'])
     ->name('home');
