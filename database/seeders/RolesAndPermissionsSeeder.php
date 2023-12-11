@@ -44,24 +44,24 @@ class RolesAndPermissionsSeeder extends Seeder
     private function createUsers(): array
     {
         $superAdmin = User::factory()->create([
-            'name' => 'Super admin',
+            'first_name' => 'Super admin',
             'email' => 'admin@mail.com',
             'password' => Hash::make('password'),
         ]);
 
         $editor = User::factory()->create([
-            'name' => 'Editor',
+            'first_name' => 'Editor',
             'email' => 'editor@mail.com',
             'password' => Hash::make('password'),
         ]);
 
         $author = User::factory()->create([
-            'name' => 'Author',
+            'first_name' => 'Author',
             'email' => 'author@mail.com',
             'password' => Hash::make('password'),
         ]);
         $user = User::factory()->create([
-            'name' => 'User',
+            'first_name' => 'User',
             'email' => 'user@mail.com',
             'password' => Hash::make('password'),
         ]);

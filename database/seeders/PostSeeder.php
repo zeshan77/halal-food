@@ -16,7 +16,7 @@ class PostSeeder extends Seeder
     public function run(): void
     {
         $user = User::factory([
-            'name' => 'Zeshan',
+            'first_name' => 'Zeshan',
             'password' => Hash::make('password'),
             'email' => 'zeshan77@gmail.com',
         ])->create();

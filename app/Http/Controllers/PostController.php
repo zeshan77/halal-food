@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Illuminate\View\View;
 
@@ -40,11 +41,14 @@ class PostController extends Controller
     {
         $slug = Str::slug($request->title);
 
+        $path = $request->file('picture')->storeAs('/posts', 'public');
+
         Post::create([
             'user_id' => Auth::user()->id,
             'slug' => $slug,
             'title' => $request->title,
             'body' => $request->body,
+            'picture' => $path,
         ]);
 
         return redirect()
@@ -86,6 +90,10 @@ class PostController extends Controller
 
     public function destroy(Post $post): RedirectResponse
     {
+        Storage::disk('public')
+            ->delete($post->picture);
+
+
         $post->delete();
 
         return redirect()

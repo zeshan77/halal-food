@@ -19,6 +19,7 @@
             <th>ID</th>
             <th>Name</th>
             <th>Email</th>
+            <th>Phone no</th>
             <th>Roles</th>
             <th>Created on</th>
             <th>Actions</th>
@@ -28,8 +29,9 @@
         @foreach($users as $user)
             <tr>
                 <td>{{ $user->id }}</td>
-                <td>{{ $user->name }}</td>
+                <td>{{ $user->first_name }}</td>
                 <td>{{ $user->email }}</td>
+                <td>{{ $user->phone_number }}</td>
                 <td>-</td>
                 <td>{{ $user->created_at }}</td>
                 <td>

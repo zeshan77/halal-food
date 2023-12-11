@@ -21,6 +21,13 @@ class Post extends Model
         'title',
         'slug',
         'body',
+        'picture',
+    ];
+
+    protected $casts = [
+        'is_reviewed' => 'boolean',
+        'published_at' => 'date:m-Y-d',
+        'meta' => 'array',
     ];
 
     public function user(): BelongsTo
