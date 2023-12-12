@@ -41,7 +41,7 @@ class PostController extends Controller
     {
         $slug = Str::slug($request->title);
 
-        $path = $request->file('picture')->storeAs('/posts', 'public');
+        $path = $request->file('picture')->storeAs('', '', 'public');
 
         Post::create([
             'user_id' => Auth::user()->id,
