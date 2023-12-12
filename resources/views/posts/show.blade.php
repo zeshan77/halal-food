@@ -3,7 +3,7 @@
     <div class="container mt-5 bg-white" style="width: 600px; padding: 3rem;" >
 
         <div class="w-1/2">
-            <img style="width: 100%; margin-bottom: 3rem; border-radius: 5px;" class="w-full" src="/{{ $post->picture }}" alt="">
+            <img style="width: 100%; margin-bottom: 3rem; border-radius: 5px;" class="w-full" src="/storage/{{ $post->picture }}" alt="">
         </div>
         <h2 class="mb-5">{{ $post->title }}</h2>
 
