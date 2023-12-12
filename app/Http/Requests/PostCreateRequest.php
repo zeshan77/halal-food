@@ -19,9 +19,6 @@ class PostCreateRequest extends FormRequest
             'picture' => [
                 'required',
                 'image',
-                'mimes:jpg,png,jpeg,svg',
-                'dimensions:min_height=100,min_width=200',
-                'size:1000',
             ],
         ];
     }
