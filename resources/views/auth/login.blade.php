@@ -2,7 +2,7 @@
 
     <div class="container mt-5 bg-white" style="width: 600px; padding: 3rem;" >
 
-        <h2 class="mb-5">Login</h2>
+        <h2 class="mb-5 text-center text-capitalize">Type in your credentials</h2>
 
         <form action="/login" method="post">
             @csrf
